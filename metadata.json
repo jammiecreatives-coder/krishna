@@ -1,0 +1,10 @@
+{
+  "name": "Krishna Packaging Company",
+  "description": "Enterprise-grade Industrial Packaging manufacturer and supplier in Jaipur, Rajasthan, offering custom B2B solutions like corrugated sheets, boxes, and protective packaging.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
