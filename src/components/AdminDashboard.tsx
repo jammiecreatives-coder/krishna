@@ -36,6 +36,7 @@ export default function AdminDashboard() {
   const [authLoading, setAuthLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [sourceFilter, setSourceFilter] = useState<string>('All Sources');
 
   // Modal active states
   const [selectedLeadForQuote, setSelectedLeadForQuote] = useState<Lead | null>(null);
@@ -211,19 +212,39 @@ export default function AdminDashboard() {
 
   // Perform client-side secure CSV compilation (decoupling server routes completely for reliable offline action)
   const triggerCSVExport = () => {
-    const headers = ['Quotation ID', 'Company Name', 'Contact Person', 'Phone', 'Email', 'Product Class', 'Units Required', 'Dispatch Destination', 'Status', 'Date Placed', 'Estimate (INR)'];
+    const headers = [
+      'Quotation ID', 
+      'Company Name', 
+      'Contact Person', 
+      'Phone', 
+      'Email', 
+      'Product Class', 
+      'Units Required', 
+      'Dispatch Destination', 
+      'Status', 
+      'Date Placed', 
+      'Estimate (INR)',
+      'Submission Date',
+      'Submission Time',
+      'Lead Source',
+      'Page URL'
+    ];
     const rows = rawQuotes.map((q) => [
       q.quotationId,
-      `"${q.companyName.replace(/"/g, '""')}"`,
-      `"${q.contactPerson.replace(/"/g, '""')}"`,
-      q.phone,
-      q.email,
-      q.productType,
-      q.quantity,
+      `"${(q.companyName || '').replace(/"/g, '""')}"`,
+      `"${(q.contactPerson || '').replace(/"/g, '""')}"`,
+      q.phone || '',
+      q.email || '',
+      q.productType || '',
+      q.quantity || 1,
       `"${(q.destination || '').replace(/"/g, '""')}"`,
       q.status,
       q.createdAt,
-      q.leadValue || 0
+      q.leadValue || 0,
+      q.submissionDate || '',
+      q.submissionTime || '',
+      q.leadSource || 'Direct-Inquiry',
+      `"${(q.pageUrl || '').replace(/"/g, '""')}"`
     ]);
 
     const csvContent = 'data:text/csv;charset=utf-8,' 
@@ -232,7 +253,7 @@ export default function AdminDashboard() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `krishna_packaging_rfps_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `krishna_packaging_leads_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -259,9 +280,18 @@ export default function AdminDashboard() {
     const matchSearch =
       lead.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.contactPerson.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.productRequired.toLowerCase().includes(searchTerm.toLowerCase());
+      lead.productRequired.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.phone.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lead.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (lead.leadSource || '').toLowerCase().includes(searchTerm.toLowerCase());
+      
     const matchStatus = statusFilter === 'All' || lead.status === statusFilter;
-    return matchSearch && matchStatus;
+    
+    const normalizedSource = lead.leadSource || 'Direct-Inquiry';
+    const matchSource = sourceFilter === 'All Sources' || 
+                        normalizedSource.toLowerCase() === sourceFilter.toLowerCase();
+                        
+    return matchSearch && matchStatus && matchSource;
   });
 
   // Calculate high-level KPIs widgets
@@ -397,32 +427,50 @@ export default function AdminDashboard() {
       </div>
 
       {/* SEARCH AND FILTERS */}
-      <div className="bg-white border-2 border-brand-blue p-4 rounded-none flex flex-col lg:flex-row items-center justify-between gap-4 shadow-sm">
+      <div className="bg-white border-2 border-brand-blue p-4 rounded-none flex flex-col xl:flex-row items-center justify-between gap-4 shadow-sm w-full">
         {/* Search Input */}
-        <div className="relative w-full lg:w-96 font-sans">
+        <div className="relative w-full xl:w-80 font-sans">
           <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400 animate-none shrink-0" />
           <input
             type="text"
-            placeholder="Search Company, Contact person or product..."
+            placeholder="Search Company, contact phone, source..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-slate-50 border border-slate-300 rounded-none pl-9 pr-3 py-2 text-xs text-brand-blue focus:border-brand-orange focus:bg-white outline-none font-sans"
           />
         </div>
 
-        {/* Status filters */}
-        <div className="flex space-x-1 border border-slate-200 p-0.5 rounded-none bg-slate-50 overflow-x-auto w-full lg:w-auto">
-          {['All', 'New', 'Quote Generated', 'Pending Approval', 'Converted', 'Lost'].map((filt) => (
-            <button
-              key={filt}
-              onClick={() => setStatusFilter(filt)}
-              className={`px-3 py-1.5 rounded-none text-[11px] font-mono tracking-wide cursor-pointer transition ${
-                statusFilter === filt ? 'bg-brand-blue text-white font-bold' : 'text-slate-500 hover:text-brand-blue'
-              }`}
-            >
-              {filt}
-            </button>
-          ))}
+        {/* Filters Groups */}
+        <div className="flex flex-col md:flex-row gap-3 w-full xl:w-auto">
+          {/* Status filters */}
+          <div className="flex space-x-1 border border-slate-200 p-0.5 rounded-none bg-slate-50 overflow-x-auto">
+            {['All', 'New', 'Quote Generated', 'Pending Approval', 'Converted', 'Lost'].map((filt) => (
+              <button
+                key={filt}
+                onClick={() => setStatusFilter(filt)}
+                className={`px-2.5 py-1.5 rounded-none text-[10px] font-mono tracking-wide cursor-pointer transition ${
+                  statusFilter === filt ? 'bg-brand-blue text-white font-bold' : 'text-slate-500 hover:text-brand-blue'
+                }`}
+              >
+                {filt}
+              </button>
+            ))}
+          </div>
+
+          {/* Lead Source filters */}
+          <div className="flex space-x-1 border border-slate-200 p-0.5 rounded-none bg-slate-50 overflow-x-auto">
+            {['All Sources', 'Lead Popup', 'Exit Intent', 'Direct-Inquiry'].map((filtSrc) => (
+              <button
+                key={filtSrc}
+                onClick={() => setSourceFilter(filtSrc)}
+                className={`px-2.5 py-1.5 rounded-none text-[10px] font-mono tracking-wide cursor-pointer transition ${
+                  sourceFilter === filtSrc ? 'bg-brand-orange text-white font-bold' : 'text-slate-500 hover:text-brand-orange'
+                }`}
+              >
+                {filtSrc.replace('-', ' ')}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -457,15 +505,36 @@ export default function AdminDashboard() {
                   return (
                     <tr key={lead.id} className="hover:bg-slate-50 transition border-b border-slate-200">
                       {/* Company Name & Person */}
-                      <td className="p-3 space-y-1 max-w-xs">
-                        <p className="font-extrabold text-brand-blue text-sm uppercase">{lead.companyName}</p>
-                        <div className="text-[10px] text-slate-500 font-mono space-x-2">
-                          <span className="text-slate-400">Person:</span>
-                          <span className="text-brand-blue font-bold">{lead.contactPerson}</span>
-                          <span>|</span>
-                          <span className="text-brand-orange hover:underline font-bold">{lead.phone}</span>
+                      <td className="p-3 space-y-1.5 max-w-xs">
+                        <div className="flex flex-wrap gap-1.5 items-center">
+                          <p className="font-extrabold text-brand-blue text-sm uppercase mr-1">{lead.companyName}</p>
+                          {lead.leadSource && (
+                            <span className={`inline-block text-[9px] font-mono font-bold uppercase px-1.5 py-0.5 rounded-none select-none ${
+                              lead.leadSource === 'Lead Popup' ? 'bg-amber-100 text-amber-800 border border-amber-300' :
+                              lead.leadSource === 'Exit Intent' ? 'bg-[#ffeedd] text-brand-orange border border-brand-orange/40' :
+                              'bg-indigo-100 text-indigo-800 border border-indigo-300'
+                            }`}>
+                              {lead.leadSource}
+                            </span>
+                          )}
                         </div>
-                        <p className="text-[10px] text-slate-500 leading-normal italic line-clamp-1 font-sans">Notes: {lead.notes || 'None'}</p>
+                        <div className="text-[10px] text-slate-500 font-mono space-y-0.5">
+                          <div className="flex items-center space-x-2 flex-wrap">
+                            <span className="text-slate-400 font-sans">Contact:</span>
+                            <span className="text-brand-blue font-bold">{lead.contactPerson}</span>
+                            <span>|</span>
+                            <span className="text-brand-orange font-bold">{lead.phone}</span>
+                            <span>|</span>
+                            <span className="text-blue-700 font-semibold">{lead.email}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-slate-400 font-sans">Capture Time:</span>
+                            <span className="text-slate-705 font-medium font-mono text-[9px]">
+                              {lead.submissionDate ? `${lead.submissionDate} @ ${lead.submissionTime}` : new Date(lead.createdAt).toLocaleDateString()}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-[10px] text-slate-500 leading-normal italic line-clamp-2 font-sans">Notes: {lead.notes || lead.message || 'None'}</p>
                       </td>
 
                       {/* Product spec desired */}
@@ -686,6 +755,14 @@ export default function AdminDashboard() {
                   className="w-full bg-slate-50 border border-slate-300 rounded-none px-2.5 py-2 text-xs text-brand-blue font-mono outline-none"
                 />
               </div>
+
+              {editingLead.leadSource && (
+                <div className="p-2.5 bg-[#fbfbf9] border border-slate-200 text-[10px] font-mono space-y-1 text-slate-500">
+                  <div><span className="font-extrabold uppercase text-slate-400 mr-1">Origin Source:</span> <span className="text-brand-orange font-bold">{editingLead.leadSource}</span></div>
+                  {editingLead.submissionDate && <div><span className="font-extrabold uppercase text-slate-400 mr-1">Timestamp:</span> <span className="text-[#002147] font-semibold">{editingLead.submissionDate} @ {editingLead.submissionTime}</span></div>}
+                  {editingLead.pageUrl && <div className="break-all"><span className="font-extrabold uppercase text-slate-400 mr-1">Landing Page:</span> <span className="text-blue-700 underline flex-wrap">{editingLead.pageUrl}</span></div>}
+                </div>
+              )}
 
               <button
                 type="submit"

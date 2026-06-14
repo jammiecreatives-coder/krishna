@@ -153,121 +153,176 @@ export default function Header({ activeTab, setActiveTab, openQuoteForm, userPro
           {userProfile ? (
             <button
               onClick={() => setActiveTab('dashboard')}
-              className="text-brand-orange text-[10px] font-bold uppercase px-2.5 py-2 border border-brand-orange/40 hover:bg-white/5 rounded-none transition"
+              className="text-brand-orange text-[10px] font-bold uppercase px-3 py-2 border border-brand-orange/40 hover:bg-white/5 rounded-none transition font-sans"
             >
               Portal
             </button>
           ) : (
             <button
               onClick={() => onOpenAuth('signin')}
-              className="text-slate-200 text-[10px] font-bold uppercase px-2 py-2"
+              className="text-slate-200 text-[10px] font-bold uppercase px-3 py-2 font-sans"
             >
               Sign In
             </button>
           )}
           <button
             onClick={openQuoteForm}
-            className="bg-brand-orange text-white text-[10px] font-extrabold uppercase px-3 py-2 rounded-none shadow transition-all duration-150"
+            className="bg-brand-orange hover:bg-brand-orange/90 text-white text-[11px] font-extrabold uppercase px-3.5 py-2 rounded-none shadow transition-all duration-150 min-h-[38px] flex items-center font-sans"
           >
             Quote
           </button>
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-slate-200 hover:text-white p-2 rounded-none hover:bg-white/5 transition-colors"
+            onClick={() => setMobileMenuOpen(true)}
+            className="text-slate-200 hover:text-white p-2.5 rounded-none hover:bg-white/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            aria-label="Open menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Premium Slide-Out Side Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="xl:hidden bg-brand-blue border-t border-brand-orange/40 px-4 py-3 space-y-2 overflow-hidden"
-          >
-            {navItems.map((item) => {
-              const isActive = activeTab === item.value;
-              return (
-                <button
-                  key={item.value}
-                  onClick={() => {
-                    setActiveTab(item.value);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`w-full text-left px-3 py-2.5 rounded-none text-sm font-medium transition-colors flex items-center justify-between ${
-                    isActive ? 'bg-white/10 text-brand-orange font-bold' : 'text-slate-200 hover:bg-white/5 hover:text-white'
-                  }`}
-                >
-                  <span className="font-sans">{item.label}</span>
-                  {item.icon && <item.icon className="w-4 h-4 text-slate-300" />}
-                </button>
-              );
-            })}
-            <div className="pt-3 border-t border-white/10 flex flex-col space-y-2">
-              {userProfile ? (
-                <>
-                  <button
-                    onClick={() => {
-                      setActiveTab('dashboard');
-                      setMobileMenuOpen(false);
-                    }}
-                    className="bg-white/5 text-slate-100 py-2.5 rounded-none text-xs font-bold uppercase tracking-wider text-center cursor-pointer flex items-center justify-center space-x-2"
-                  >
-                    <User className="w-4 h-4 text-brand-orange" />
-                    <span>My Dashboard Portal</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      onSignOut();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="bg-red-950/20 text-red-100 py-2.5 rounded-none text-xs font-bold uppercase tracking-wider text-center cursor-pointer"
-                  >
-                    Sign Out Account
-                  </button>
-                </>
-              ) : (
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => {
-                      onOpenAuth('signin');
-                      setMobileMenuOpen(false);
-                    }}
-                    className="bg-white/5 text-white py-2.5 rounded-none text-xs font-bold uppercase tracking-wider text-center cursor-pointer"
-                  >
-                    Sign In
-                  </button>
-                  <button
-                    onClick={() => {
-                      onOpenAuth('signup');
-                      setMobileMenuOpen(false);
-                    }}
-                    className="bg-white/10 text-white py-2.5 rounded-none text-xs font-bold uppercase tracking-wider text-center cursor-pointer"
-                  >
-                    Sign Up
-                  </button>
+          <>
+            {/* Backdrop Blur Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md xl:hidden"
+            />
+
+            {/* Sidebar Container */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+              className="fixed right-0 top-0 bottom-0 z-55 w-[85vw] max-w-sm bg-brand-blue border-l border-brand-orange/30 shadow-2xl flex flex-col justify-between text-white xl:hidden overflow-y-auto"
+            >
+              {/* Drawer Title Header with Custom Close click */}
+              <div className="p-5 border-b border-white/10 flex items-center justify-between bg-brand-blue/95">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-brand-orange flex items-center justify-center rounded-none shadow">
+                    <Box className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-black tracking-tight leading-tight uppercase font-sans">
+                      Krishna <span className="text-brand-orange">B2B</span>
+                    </h2>
+                    <p className="text-[8px] font-mono uppercase tracking-widest text-slate-350">Jaipur Packaging</p>
+                  </div>
                 </div>
-              )}
-              <a href="tel:+919829088124" className="bg-white/5 text-white text-center py-2.5 rounded-none font-bold text-xs flex items-center justify-center space-x-2">
-                <Phone className="w-4 h-4 text-brand-orange" />
-                <span>Call Now: +91 98290 88124</span>
-              </a>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  openQuoteForm();
-                }}
-                className="bg-brand-orange text-white text-center py-2.5 rounded-none font-extrabold text-xs uppercase tracking-wider"
-              >
-                Request Quotation
-              </button>
-            </div>
-          </motion.div>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 text-slate-300 hover:text-white hover:bg-white/5 transition-colors rounded-none outline-none min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  aria-label="Close menu"
+                >
+                  <X className="w-6 h-6 text-brand-orange" />
+                </button>
+              </div>
+
+              {/* Navigation Items list - Spacious touch targets */}
+              <div className="flex-grow p-4 py-6 space-y-1.5">
+                <p className="text-[9px] font-mono uppercase text-slate-400 tracking-widest font-black px-3 mb-2.5">
+                  Factory Navigation
+                </p>
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.value;
+                  return (
+                    <button
+                      key={item.value}
+                      onClick={() => {
+                        setActiveTab(item.value);
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`w-full text-left px-3.5 py-3.5 rounded-none text-sm transition-all flex items-center justify-between min-h-[48px] cursor-pointer ${
+                        isActive 
+                          ? 'bg-brand-orange/15 text-brand-orange font-bold border-l-4 border-brand-orange pl-2.5' 
+                          : 'text-slate-200 hover:bg-white/5 hover:text-brand-orange font-medium'
+                      }`}
+                    >
+                      <span className="font-sans text-[13.5px] uppercase tracking-wide">{item.label}</span>
+                      {Icon && <Icon className={`w-4.5 h-4.5 ${isActive ? 'text-brand-orange' : 'text-slate-400'}`} />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Drawer Bottom CTA Elements */}
+              <div className="p-5 border-t border-white/10 bg-[#001c3d]/60 space-y-3">
+                <p className="text-[8px] font-mono uppercase text-slate-400 tracking-widest font-bold block mb-1">
+                  B2B Quick Connections
+                </p>
+
+                {userProfile ? (
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => {
+                        setActiveTab('dashboard');
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full bg-white/5 hover:bg-white/10 text-slate-100 py-3 rounded-none text-xs font-bold uppercase tracking-wider text-center cursor-pointer flex items-center justify-center space-x-2 min-h-[46px] font-sans border border-white/10"
+                    >
+                      <User className="w-4 h-4 text-brand-orange" />
+                      <span>Inquiry Dashboard</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        onSignOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full bg-red-950/20 text-red-200 hover:bg-red-950/30 py-3 rounded-none text-xs font-bold uppercase tracking-wider text-center min-h-[46px] font-sans"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => {
+                        onOpenAuth('signin');
+                        setMobileMenuOpen(false);
+                      }}
+                      className="bg-white/5 text-white py-3 rounded-none text-xs font-bold uppercase tracking-wider text-center cursor-pointer min-h-[46px] font-sans border border-white/10"
+                    >
+                      Sign In
+                    </button>
+                    <button
+                      onClick={() => {
+                        onOpenAuth('signup');
+                        setMobileMenuOpen(false);
+                      }}
+                      className="bg-white/10 text-white py-3 rounded-none text-xs font-bold uppercase tracking-wider text-center cursor-pointer min-h-[46px] font-sans border border-white/10"
+                    >
+                      Sign Up
+                    </button>
+                  </div>
+                )}
+
+                <a 
+                  href="tel:+919829088124" 
+                  className="w-full bg-[#001127] text-slate-100 text-center py-3 rounded-none font-bold text-xs flex items-center justify-center space-x-2 min-h-[46px] border border-white/5"
+                >
+                  <Phone className="w-4 h-4 text-brand-orange" />
+                  <span className="font-mono">+91 98290 88124</span>
+                </a>
+
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    openQuoteForm();
+                  }}
+                  className="w-full bg-brand-orange hover:bg-brand-orange/90 text-white text-center py-3 rounded-none font-black text-xs uppercase tracking-widest shadow-lg min-h-[46px] font-sans"
+                >
+                  Request B2B Quote
+                </button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

@@ -52,10 +52,19 @@ export default function Footer({ setActiveTab, openQuoteForm }: FooterProps) {
             <span className="text-white font-black tracking-tight text-base uppercase font-sans">KRISHNA PACKAGING</span>
           </div>
           <p className="text-xs text-slate-300 leading-relaxed font-sans">
-            Krishna Packaging Company is an industry-leading packaging enterprise based close to Ajmer Road, Jaipur. We engineer high-strength corrugated sheets, boxes, and bespoke logistical cushioning systems to protect your high-value components.
+            Krishna Packaging Company is Rajasthan's leading packaging manufacturer, supplying high-strength corrugated sheets, shipper boxes, and protective foam pads directly from Jaipur to all national clusters.
           </p>
-          <div className="text-[11px] font-mono text-slate-400 space-y-1">
-            <p>Registration: RJ-JP-2026-B812</p>
+          <div className="text-xs space-y-2 border-t border-white/10 pt-3">
+            <p className="flex items-center space-x-2 text-slate-350 font-sans">
+              <Phone className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+              <span>Call: <a href="tel:+919829088124" className="text-white font-bold hover:text-brand-orange transition-colors">+91 98290 88124</a></span>
+            </p>
+            <p className="flex items-center space-x-2 text-slate-350 font-sans">
+              <Mail className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+              <span>Email: <a href="mailto:info@krishnapackagingjaipur.com" className="text-white hover:text-brand-orange transition-colors">info@krishnapackagingjaipur.com</a></span>
+            </p>
+          </div>
+          <div className="text-[11px] font-mono text-slate-400 space-y-1 border-t border-white/10 pt-3">
             <p>Compliance: IS:2771 Structure Assured</p>
             <p>Direct Supply: Jaipur, Sitapura, Vishwakarma, Boranada</p>
           </div>
@@ -87,28 +96,24 @@ export default function Footer({ setActiveTab, openQuoteForm }: FooterProps) {
         </div>
 
         {/* Address and Reach */}
-        <div>
-          <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-4 border-l-2 border-brand-orange pl-2 font-mono">Jaipur Factory</h4>
+        <div className="space-y-4">
+          <h4 className="text-white font-bold text-xs uppercase tracking-widest mb-4 border-l-2 border-brand-orange pl-2 font-mono">Corporate Factory</h4>
           <ul className="space-y-3.5 text-xs">
             <li className="flex items-start space-x-2">
               <MapPin className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
-              <span className="text-slate-300 leading-relaxed font-sans">
-                S-24,25 Janta Colony, Saket Colony,<br />
-                Adarsh Nagar, Jaipur,<br />
-                Rajasthan 302004, India
-              </span>
+              <div className="text-slate-300 leading-relaxed font-sans">
+                <span className="font-semibold text-white block">S-24,25 Janta Colony, Saket Colony</span>
+                <span>Adarsh Nagar, Jaipur,<br />Rajasthan 302004, India</span>
+              </div>
             </li>
-            <li className="flex items-center space-x-2">
-              <Phone className="w-4 h-4 text-brand-orange shrink-0" />
-              <span className="text-white font-semibold font-mono">+91 98290 88124</span>
+            <li className="border-t border-white/10 pt-3">
+              <p className="text-[10px] text-slate-400 font-mono uppercase tracking-wider">Managing Director</p>
+              <p className="text-white font-bold text-xs font-sans">Mr. Krishna Khandelwal</p>
+              <p className="text-slate-405 text-[11px]">Industrial Corrugation Lead</p>
             </li>
-            <li className="flex items-center space-x-2 font-sans">
-              <Mail className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>info@krishnapackagingjaipur.com</span>
-            </li>
-            <li className="flex items-center space-x-2 font-sans">
-              <Clock className="w-4 h-4 text-brand-orange shrink-0" />
-              <span className="text-slate-300">Mon - Sat: 09:00 AM - 07:30 PM (IST)</span>
+            <li className="border-t border-white/10 pt-3">
+              <p className="text-[10px] text-slate-400 font-mono uppercase tracking-wider">GSTIN Registry</p>
+              <p className="text-brand-orange font-bold font-mono text-[11px] tracking-wide">08AAPCK8124G1Z2</p>
             </li>
           </ul>
         </div>

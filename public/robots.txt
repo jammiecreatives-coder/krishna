@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://krishna-packaging-company.firebaseapp.com/sitemap.xml

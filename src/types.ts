@@ -34,6 +34,11 @@ export interface Lead {
   internalNotes?: string;
   assignedTo?: string;
   leadValue?: number;
+  message?: string;
+  submissionDate?: string;
+  submissionTime?: string;
+  leadSource?: string;
+  pageUrl?: string;
 }
 
 export interface Quote {

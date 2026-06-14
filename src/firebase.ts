@@ -9,7 +9,10 @@ import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
 import firebaseConfig from '../firebase-applet-config.json';
 
 // Construct config directly from applet platform configuration
-const finalConfig = firebaseConfig;
+const finalConfig = {
+  ...firebaseConfig,
+  authDomain: 'krishna-packaging-company.firebaseapp.com'
+};
 
 // Initialize Firebase App with platform configuration
 const app = initializeApp(finalConfig);

@@ -38,12 +38,17 @@ export interface QuotationRecord {
   productType: string;
   quantity: number;
   destination: string;
-  notes: string;
+  notes?: string;
   status: 'New' | 'Quote Generated' | 'Pending Approval' | 'Converted' | 'Lost';
   createdAt: string;
   internalNotes?: string;
   assignedTo?: string;
   leadValue?: number;
+  message?: string;
+  submissionDate?: string;
+  submissionTime?: string;
+  leadSource?: string;
+  pageUrl?: string;
 }
 
 // 1. User Profile Operations
@@ -108,14 +113,19 @@ export function mapQuotationToLead(q: QuotationRecord): Lead {
     productRequired: q.productType,
     quantityRequired: q.quantity,
     deliveryLocation: q.destination,
-    notes: q.notes,
+    notes: q.notes || '',
     status: q.status === 'Quote Generated' ? 'Quote Generated' : 
             q.status === 'Converted' ? 'Converted' : 
             q.status === 'Lost' ? 'Lost' : 'New',
     createdAt: q.createdAt,
-    internalNotes: q.internalNotes || 'Requested via user dashboard portal.',
+    internalNotes: q.internalNotes || 'Requested via packaging inquiry portal.',
     assignedTo: q.assignedTo || 'Vikram Singh',
-    leadValue: q.leadValue || q.quantity * 15
+    leadValue: q.leadValue || q.quantity * 15,
+    message: q.message || '',
+    submissionDate: q.submissionDate || '',
+    submissionTime: q.submissionTime || '',
+    leadSource: q.leadSource || 'Direct-Inquiry',
+    pageUrl: q.pageUrl || ''
   };
 }
 
@@ -135,7 +145,12 @@ export function mapLeadToQuotation(l: Lead): QuotationRecord {
     createdAt: l.createdAt,
     internalNotes: l.internalNotes,
     assignedTo: l.assignedTo,
-    leadValue: l.leadValue
+    leadValue: l.leadValue,
+    message: l.message,
+    submissionDate: l.submissionDate,
+    submissionTime: l.submissionTime,
+    leadSource: l.leadSource,
+    pageUrl: l.pageUrl
   };
 }
 

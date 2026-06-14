@@ -54,15 +54,24 @@ service cloud.firestore {
              data.productType is string && data.productType.size() <= 100 &&
              data.quantity is int && data.quantity >= 1 &&
              data.status is string && (data.status == 'New' || data.status == 'Quote Generated' || data.status == 'Pending Approval' || data.status == 'Converted' || data.status == 'Lost') &&
-             data.createdAt is string;
+             data.createdAt is string &&
+             (!('notes' in data) || (data.notes is string && data.notes.size() <= 2000)) &&
+             (!('message' in data) || (data.message is string && data.message.size() <= 2000)) &&
+             (!('submissionDate' in data) || (data.submissionDate is string && data.submissionDate.size() <= 100)) &&
+             (!('submissionTime' in data) || (data.submissionTime is string && data.submissionTime.size() <= 100)) &&
+             (!('leadSource' in data) || (data.leadSource is string && data.leadSource.size() <= 100)) &&
+             (!('pageUrl' in data) || (data.pageUrl is string && data.pageUrl.size() <= 500)) &&
+             (!('internalNotes' in data) || (data.internalNotes is string && data.internalNotes.size() <= 2000)) &&
+             (!('assignedTo' in data) || (data.assignedTo is string && data.assignedTo.size() <= 200)) &&
+             (!('leadValue' in data) || (data.leadValue is int || data.leadValue is float));
     }
 
     match /quotations/{quotationId} {
       allow get: if isAdmin() || (isSignedIn() && resource.data.email == request.auth.token.email);
       allow list: if isAdmin() || (isSignedIn() && resource.data.email == request.auth.token.email);
       
-      // Permit creation by any authenticated user for their own email, or by administrator
-      allow create: if (isSignedIn() && isValidQuotation(request.resource.data) && request.resource.data.email == request.auth.token.email) || isAdmin();
+      // Permit creation by guests and authenticated users alike to optimize marketing loop
+      allow create: if isValidQuotation(request.resource.data);
       allow update: if isAdmin();
       allow delete: if isAdmin();
     }

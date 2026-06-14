@@ -30,7 +30,15 @@
         "destination": { "type": "string", "description": "Logistical transit delivery address" },
         "notes": { "type": "string", "description": "Optional custom corrugated requirements/specifications" },
         "status": { "type": "string", "enum": ["New", "Quote Generated", "Pending Approval", "Converted", "Lost"], "description": "Fulfillment status in pipeline" },
-        "createdAt": { "type": "string", "format": "date-time", "description": "Date-time request was placed" }
+        "createdAt": { "type": "string", "format": "date-time", "description": "Date-time request was placed" },
+        "message": { "type": "string", "description": "Brief lead message or consultation notes" },
+        "submissionDate": { "type": "string", "description": "Human-readable date of lead collection" },
+        "submissionTime": { "type": "string", "description": "Human-readable local time of submission" },
+        "leadSource": { "type": "string", "description": "Source of lead capture (e.g. Lead Popup, Exit Intent, Website Footer)" },
+        "pageUrl": { "type": "string", "description": "Form submission source URL" },
+        "internalNotes": { "type": "string", "description": "Staff private work notes or internal comments" },
+        "assignedTo": { "type": "string", "description": "Assigned b2b sales representative" },
+        "leadValue": { "type": "number", "description": "Estimated revenue or order value" }
       },
       "required": ["quotationId", "companyName", "contactPerson", "phone", "email", "productType", "quantity", "status", "createdAt"]
     },

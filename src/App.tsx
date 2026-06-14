@@ -24,6 +24,7 @@ import { auth } from './firebase';
 import { getUserProfile, UserProfile } from './services/dbService';
 import AuthSystem from './components/AuthSystem';
 import Dashboard from './components/Dashboard';
+import LeadCaptureSystem from './components/LeadCaptureSystem';
 
 export default function App() {
   const [activeTab, _setActiveTab] = useState(() => {
@@ -86,13 +87,37 @@ export default function App() {
     }
   };
 
+  // Instantly disable custom scroll restoration to manual
+  if (typeof window !== 'undefined') {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }
+
+  const forceScrollToTop = () => {
+    if (typeof window === 'undefined') return;
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Multiple cycles to ensure total consistency across mobile Safari/Chrome viewport state shifts
+    const delays = [0, 5, 20, 50, 120, 250, 500];
+    delays.forEach((t) => {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }, t);
+    });
+  };
+
   const setActiveTab = (tab: string) => {
     _setActiveTab(tab);
     const targetPath = tab === 'home' ? '/' : `/${tab}`;
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab }, '', targetPath);
     }
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    forceScrollToTop();
   };
 
   // Synchronize route paths like /admin or /admin/login or hash changes
@@ -118,11 +143,29 @@ export default function App() {
       } else if (path === '/' || path === '') {
         _setActiveTab('home');
       }
+      forceScrollToTop();
     };
 
     window.addEventListener('popstate', handleLocationChange);
-    return () => window.removeEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('pageshow', handleLocationChange);
+    window.addEventListener('load', handleLocationChange);
+    
+    // Initial mount check
+    forceScrollToTop();
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('pageshow', handleLocationChange);
+      window.removeEventListener('load', handleLocationChange);
+    };
   }, []);
+
+  // Sync scroll to top on any manual activeTab updates
+  useEffect(() => {
+    forceScrollToTop();
+  }, [activeTab]);
 
   const [isQuoteFormOpen, setIsQuoteFormOpen] = useState(false);
   const [preselectedProductForQuote, setPreselectedProductForQuote] = useState('');
@@ -184,7 +227,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf9] text-slate-900 flex flex-col font-sans selection:bg-brand-orange selection:text-white border-[12px] md:border-[16px] border-brand-blue relative">
+    <div className="min-h-screen bg-[#fafaf9] text-slate-900 flex flex-col font-sans selection:bg-brand-orange selection:text-white border-0 md:border-[12px] lg:border-[16px] border-brand-blue relative pb-24 sm:pb-0">
       <SEOEngine />
 
       {/* Primary Navigation System */}
@@ -226,7 +269,7 @@ export default function App() {
 
               <div className="lg:col-span-6 space-y-6">
                 <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-black flex items-center gap-1.5"><span className="w-6 h-[2px] bg-brand-orange"></span>FOUNDED IN 2014 • JAIPUR PACKAGING EXCELLENCE</span>
-                <h3 className="text-3xl lg:text-5xl font-extrabold tracking-tight text-brand-blue leading-tight uppercase font-sans">
+                <h3 className="text-3xl lg:text-5xl font-extrabold tracking-tight text-brand-blue leading-tight uppercase font-display">
                   Rajasthan's Premier <span className="italic font-serif font-normal text-brand-orange lowercase">Manufacturer</span> Of Heavy-Duty Corrugated Systems
                 </h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
@@ -276,7 +319,7 @@ export default function App() {
                   <span className="text-[10px] font-mono uppercase bg-[#002147] py-1 px-3 text-brand-orange tracking-widest border border-[#002147] font-bold">
                     B2B STRUCTURAL INVENTORY
                   </span>
-                  <h3 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-brand-blue leading-normal uppercase">
+                  <h3 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-brand-blue leading-normal uppercase font-display animate-fadeIn">
                     Precision Industrial <span className="italic font-serif text-brand-orange lowercase font-normal">Product Classes</span>
                   </h3>
                   <p className="text-xs text-slate-600 max-w-xl mx-auto leading-relaxed font-sans">
@@ -295,6 +338,10 @@ export default function App() {
                           src={prod.image}
                           alt={prod.name}
                           referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800";
+                          }}
                           className="w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition duration-500"
                         />
                         <div className="absolute top-3 left-3 bg-brand-blue text-brand-orange text-[10px] uppercase font-mono tracking-widest px-2 py-1 rounded-none border border-brand-blue/30">
@@ -320,7 +367,6 @@ export default function App() {
                         <button
                           onClick={() => {
                             setActiveTab('products');
-                            window.scrollTo({ top: 300, behavior: 'smooth' });
                           }}
                           className="bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-700 px-3 py-2 rounded-none text-center text-xs font-bold transition cursor-pointer"
                         >
@@ -343,7 +389,7 @@ export default function App() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
               <div className="text-center space-y-2">
                 <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">RELIABILITY METRICS</span>
-                <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase">Why Enterprise <span className="italic font-serif text-brand-orange lowercase font-normal">Exporters</span> Choose Us</h3>
+                <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase font-display">Why Enterprise <span className="italic font-serif text-brand-orange lowercase font-normal">Exporters</span> Choose Us</h3>
                 <p className="text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-sans">
                   We understand that transit layout failures disrupt entire manufacturing pipelines. We mitigate this through calibrated engineering.
                 </p>
@@ -388,7 +434,7 @@ export default function App() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div className="text-center space-y-2">
                   <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">CLIENT HORIZONS</span>
-                  <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase">Industries Relying On <span className="italic font-serif text-brand-orange lowercase font-normal">Our Packaging</span></h3>
+                  <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase font-display">Industries Relying On <span className="italic font-serif text-brand-orange lowercase font-normal">Our Packaging</span></h3>
                   <p className="text-xs text-slate-600 max-w-xl mx-auto leading-relaxed font-sans">
                     Custom composite designs configured to isolate vibration, shock, and temperature changes.
                   </p>
@@ -414,7 +460,7 @@ export default function App() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
               <div className="text-center space-y-2">
                 <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">DIGITAL AUDIT</span>
-                <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase">The Clean Board <span className="italic font-serif text-brand-orange lowercase font-normal">Manufacturing</span> Pipeline</h3>
+                <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase font-display">The Clean Board <span className="italic font-serif text-brand-orange lowercase font-normal">Manufacturing</span> Pipeline</h3>
               </div>
               <InteractiveTimeline />
             </section>
@@ -423,7 +469,7 @@ export default function App() {
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
               <div className="lg:col-span-5 space-y-4">
                 <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">OPERATIONS PROTOCOL</span>
-                <h3 className="text-2xl lg:text-3xl font-black text-brand-blue leading-tight uppercase font-sans">
+                <h3 className="text-2xl lg:text-3xl font-black text-brand-blue leading-tight uppercase font-display">
                   Frequently Asked B2B Purchase Questions
                 </h3>
                 <p className="text-slate-650 text-xs leading-relaxed font-sans">
@@ -457,7 +503,7 @@ export default function App() {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div className="text-center space-y-2">
                   <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">CLIENT REASSURANCE</span>
-                  <h3 className="text-3xl font-extrabold text-brand-blue uppercase">Partnerships That Stood <span className="italic font-serif text-brand-orange lowercase font-normal">Staggered</span> Testing</h3>
+                  <h3 className="text-3xl font-extrabold text-brand-blue uppercase font-display">Partnerships That Stood <span className="italic font-serif text-brand-orange lowercase font-normal">Staggered</span> Testing</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -508,6 +554,10 @@ export default function App() {
                       src={prod.image}
                       alt={prod.name}
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800";
+                      }}
                       className="w-full h-80 object-cover rounded-none border border-slate-200 shadow-lg filter brightness-95"
                     />
                     <div className="absolute top-4 left-4 bg-[#002147] text-brand-orange font-mono text-[10px] uppercase tracking-widest px-2 py-1 border border-brand-blue rounded-none font-bold">
@@ -958,79 +1008,8 @@ export default function App() {
 
       {/* FLOAT CONVERSIONS AND OVERLAYS PANEL */}
 
-      {/* WhatsApp Floating Sticky Button */}
-      <a
-        href="https://wa.me/919829088124?text=Hello%20Krishna%20Packaging%2C%20we%20have%20an%20enquiry%20for%20bulk%20industrial%20corrugated%20materials."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 duration-150 cursor-pointer"
-        title="Chat on WhatsApp"
-      >
-        <MessageCircle className="w-6 h-6 stroke-[2.2]" />
-      </a>
-
-      {/* Sticky Call Now floating sidebar */}
-      <div className="fixed bottom-24 right-6 z-40 flex flex-col space-y-2">
-        <a
-          href="tel:+919829088124"
-          className="bg-brand-orange hover:bg-brand-orange/90 text-white p-3.5 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110 duration-150 cursor-pointer border border-white/20"
-          title="Direct Call Hotline"
-        >
-          <Phone className="w-5 h-5 font-bold text-white" />
-        </a>
-      </div>
-
-      {/* EXIT INTENT OVERLAY POPUP */}
-      <AnimatePresence>
-        {exitIntentTriggered && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 12 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 12 }}
-              transition={{ type: 'spring', duration: 0.4 }}
-              className="bg-white border-4 border-brand-blue rounded-none p-8 max-w-md w-full text-[#002147] text-center relative shadow-2xl space-y-4"
-            >
-              <button
-                onClick={closePromoPopup}
-                className="absolute top-4 right-4 text-slate-400 hover:text-brand-orange font-bold cursor-pointer text-xs flex items-center space-x-1 outline-none font-sans transition-colors duration-150"
-              >
-                <X className="w-3.5 h-3.5" />
-                <span>Close</span>
-              </button>
-              <div className="w-12 h-12 bg-brand-orange/10 border border-brand-orange rounded-none flex items-center justify-center mx-auto text-brand-orange animate-bounce">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono uppercase bg-[#002147] text-brand-orange border border-brand-blue px-2 py-0.5 rounded-none tracking-widest font-bold">
-                  EXCLUSIVE WHOLESALE CONTRACT DEALS
-                </span>
-                <h4 className="text-xl font-black text-brand-blue mt-2 uppercase">Get 10% Off Your Staged Logistics Pack!</h4>
-                <p className="text-xs text-slate-650 mt-1 leading-normal font-sans">
-                  Save significantly on your first corrugated sheets or crates invoice. Submit an RFP now with coupon <span className="text-brand-orange font-mono font-bold font-sm">JAIPUR-B2B-10</span>.
-                </p>
-              </div>
-
-              <div className="pt-4 flex justify-center space-x-3">
-                <button
-                  onClick={() => {
-                    closePromoPopup();
-                    handleCreateRFP();
-                  }}
-                  className="bg-brand-orange hover:bg-brand-orange/90 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-none shadow cursor-pointer transition active:scale-95"
-                >
-                  Apply Coupon & Claim Quotation
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* ADVANCED LEAD CAPTURE SYSTEM (LEAD POPUP, EXIT INTENT CONSULTATION POPUP, AND MOBILE CTA BAR) */}
+      <LeadCaptureSystem />
 
       {/* MODAL ENQUIRY FORM PANEL DRAWER */}
       <AnimatePresence>
