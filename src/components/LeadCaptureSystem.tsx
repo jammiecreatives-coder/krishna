@@ -61,6 +61,17 @@ export default function LeadCaptureSystem() {
     localStorage.setItem('kpc_exit_form_progress', JSON.stringify(exitFormData));
   }, [exitFormData]);
 
+  // Visual scroll alignment to top when popups are loaded
+  useEffect(() => {
+    if (isLeadPopupOpen || isExitIntentOpen) {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0 });
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    }
+  }, [isLeadPopupOpen, isExitIntentOpen]);
+
   // Handle 10 seconds of user activity for the LEAD POPUP
   useEffect(() => {
     // Check if shown in current session
@@ -214,13 +225,13 @@ export default function LeadCaptureSystem() {
       {/* 1. LEAD POPUP MODAL */}
       <AnimatePresence>
         {isLeadPopupOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex justify-center items-start overflow-y-auto p-2 sm:p-4 bg-slate-950/85 backdrop-blur-sm pt-6 pb-24 sm:py-8">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="relative w-full max-w-lg bg-white border-4 border-[#002147] shadow-2xl text-[#002147] overflow-hidden"
+              className="relative w-full max-w-lg bg-white border-4 border-[#002147] shadow-2xl text-[#002147] overflow-hidden my-auto"
             >
               {/* Top Warning/Promo ribbon */}
               <div className="bg-[#002147] text-white py-3 px-4 flex items-center justify-between border-b border-brand-orange">
@@ -385,13 +396,13 @@ export default function LeadCaptureSystem() {
       {/* 2. EXIT INTENT CONSULTATION POPUP */}
       <AnimatePresence>
         {isExitIntentOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex justify-center items-start overflow-y-auto p-2 sm:p-4 bg-slate-950/85 backdrop-blur-sm pt-6 pb-24 sm:py-8">
             <motion.div
               initial={{ y: 25, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 25, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-              className="relative w-full max-w-md bg-white border-4 border-brand-orange shadow-2xl text-[#002147] overflow-hidden"
+              className="relative w-full max-w-md bg-white border-4 border-brand-orange shadow-2xl text-[#002147] overflow-hidden my-auto"
             >
               {/* Warning Promo Line */}
               <div className="bg-brand-orange text-white text-[10px] font-mono font-bold uppercase tracking-widest text-center py-2 relative">
@@ -509,50 +520,56 @@ export default function LeadCaptureSystem() {
       </AnimatePresence>
 
       {/* 3. PREMIUM FLOATING MOBILE CTA APP DOCK */}
-      <div className="sm:hidden fixed bottom-4 left-3 right-3 z-40 bg-slate-950/95 backdrop-blur-xl border border-white/20 shadow-2xl p-2 rounded-2xl flex items-center justify-between gap-1.5 ring-1 ring-black/5">
-        <a
-          href="tel:+919829088124"
-          className="flex-1 flex flex-col items-center justify-center bg-white/5 hover:bg-white/10 active:scale-95 transition-all text-white py-2 rounded-xl text-[10px] font-mono font-bold uppercase tracking-wide min-h-[48px]"
-          id="mobile-cta-call"
-        >
-          <Phone className="w-4 h-4 text-brand-orange mb-1 shrink-0" />
-          <span className="text-[9px] text-[#f1f5f9]">Call Now</span>
-        </a>
+      <div className="sm:hidden fixed bottom-4 left-3 right-3 z-40 bg-slate-950/95 backdrop-blur-xl border border-white/10 shadow-2xl p-1.5 rounded-2xl flex items-center justify-between ring-1 ring-black/5">
+        <div className="grid grid-cols-4 gap-1.5 w-full">
+          {/* Call button */}
+          <a
+            href="tel:+919829088124"
+            className="flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-500 active:scale-95 transition-all text-white h-[52px] rounded-xl text-[9px] font-mono font-bold uppercase tracking-wide border border-blue-500/20"
+            id="mobile-cta-call"
+          >
+            <Phone className="w-4 h-4 text-white mb-1 shrink-0" />
+            <span className="text-[9px] text-white font-extrabold tracking-wider leading-none">Call</span>
+          </a>
 
-        <a
-          href="https://wa.me/919829088124?text=Hi%2C%20I%20am%20interested%20in%20packaging%20materials%20and%20would%20like%20a%20free%20quote."
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 flex flex-col items-center justify-center bg-[#25D366]/10 hover:bg-[#25D366]/20 active:scale-95 transition-all text-white py-2 rounded-xl text-[10px] font-mono font-bold uppercase tracking-wide min-h-[48px] border border-[#25D366]/25"
-          id="mobile-cta-whatsapp"
-        >
-          <MessageCircle className="w-4 h-4 text-[#25D366] mb-1 shrink-0" />
-          <span className="text-[9px] text-[#f1f5f9]">WhatsApp</span>
-        </a>
+          {/* Official WhatsApp branding button */}
+          <a
+            href="https://wa.me/919829088124?text=Hi%2C%20I%20am%20interested%20in%20packaging%20materials%20and%20would%20like%2520a%20free%20quote."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center justify-center bg-[#25D366] hover:bg-[#20ba5a] active:scale-95 transition-all text-white h-[52px] rounded-xl text-[9px] font-mono font-bold uppercase tracking-wide border border-[#25D366]/20"
+            id="mobile-cta-whatsapp"
+          >
+            <MessageCircle className="w-5 h-5 text-white mb-0.5 shrink-0" />
+            <span className="text-[9px] text-white font-extrabold tracking-wider leading-none">WhatsApp</span>
+          </a>
 
-        <button
-          onClick={() => {
-            setLeadFormData(prev => ({ ...prev, productRequirement: 'Corrugated Boxes', message: 'Requested standard rapid quote' }));
-            setIsLeadPopupOpen(true);
-          }}
-          className="flex-grow-[1.3] flex flex-col items-center justify-center bg-brand-orange hover:bg-brand-orange/95 active:scale-95 transition-all text-white py-2 rounded-xl text-[10px] font-mono font-extrabold uppercase tracking-wide min-h-[48px] shadow-lg shadow-brand-orange/20"
-          id="mobile-cta-quote"
-        >
-          <FileText className="w-4 h-4 text-white mb-1 shrink-0" />
-          <span className="text-[9px] text-white font-black">Get Quote</span>
-        </button>
+          {/* Balanced Get Quote button */}
+          <button
+            onClick={() => {
+              setLeadFormData(prev => ({ ...prev, productRequirement: 'Corrugated Boxes', message: 'Requested standard rapid quote' }));
+              setIsLeadPopupOpen(true);
+            }}
+            className="flex flex-col items-center justify-center bg-brand-orange hover:bg-brand-orange/95 active:scale-95 transition-all text-white h-[52px] rounded-xl text-[9px] font-mono font-bold uppercase tracking-wide border border-brand-orange/20 cursor-pointer"
+            id="mobile-cta-quote"
+          >
+            <FileText className="w-4 h-4 text-white mb-1 shrink-0" />
+            <span className="text-[9px] text-white font-black tracking-wider leading-none">Quote</span>
+          </button>
 
-        <button
-          onClick={() => {
-            setLeadFormData(prev => ({ ...prev, productRequirement: 'Shipper Boxes (RSC & Custom)', message: 'Direct factory callback inquiry requested' }));
-            setIsLeadPopupOpen(true);
-          }}
-          className="flex-1 flex flex-col items-center justify-center bg-[#002147]/40 hover:bg-[#002147]/65 active:scale-95 transition-all text-white py-2 rounded-xl text-[10px] font-mono font-bold uppercase tracking-wide min-h-[48px] border border-white/10"
-          id="mobile-cta-inquiry"
-        >
-          <Sparkles className="w-4 h-4 text-brand-orange mb-1 shrink-0" />
-          <span className="text-[9px] text-[#f1f5f9]">Inquiry</span>
-        </button>
+          {/* Premium Callback/Inquiry button */}
+          <button
+            onClick={() => {
+              setLeadFormData(prev => ({ ...prev, productRequirement: 'Shipper Boxes (RSC & Custom)', message: 'Direct factory callback inquiry requested' }));
+              setIsLeadPopupOpen(true);
+            }}
+            className="flex flex-col items-center justify-center bg-slate-800 hover:bg-slate-700 active:scale-95 transition-all text-white h-[52px] rounded-xl text-[9px] font-mono font-bold uppercase tracking-wide border border-white/5 cursor-pointer"
+            id="mobile-cta-inquiry"
+          >
+            <Sparkles className="w-4 h-4 text-brand-orange mb-1 shrink-0" />
+            <span className="text-[9px] text-white font-extrabold tracking-wider leading-none">Inquiry</span>
+          </button>
+        </div>
       </div>
     </>
   );

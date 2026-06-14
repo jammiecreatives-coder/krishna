@@ -88,6 +88,39 @@ export default function LeadForm({ onClose, preselectedProduct, onSuccessSubmit 
     });
   }, [formData.productRequired, formData.quantityRequired]);
 
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scroll the whole window/document to absolute top to circumvent keyboard viewport issues
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0 });
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+
+    // Force the scroll container of the modal overlay to reset scroll to 0
+    const scrollTimer = setTimeout(() => {
+      if (containerRef.current) {
+        // Aligns form at start position
+        containerRef.current.scrollIntoView({ block: 'start' });
+
+        let currentEl = containerRef.current.parentElement;
+        while (currentEl) {
+          if (
+            currentEl.classList.contains('overflow-y-auto') || 
+            currentEl.scrollHeight > currentEl.clientHeight
+          ) {
+            currentEl.scrollTop = 0;
+            break;
+          }
+          currentEl = currentEl.parentElement;
+        }
+      }
+    }, 15);
+
+    return () => clearTimeout(scrollTimer);
+  }, [preselectedProduct]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -130,7 +163,7 @@ export default function LeadForm({ onClose, preselectedProduct, onSuccessSubmit 
   };
 
   return (
-    <div className="bg-white border-2 border-brand-blue rounded-none overflow-hidden shadow-2xl text-[#002147]">
+    <div ref={containerRef} className="bg-white border-2 border-brand-blue rounded-none overflow-hidden shadow-2xl text-[#002147]">
       {/* Header Band */}
       <div className="bg-[#002147] px-4 py-5 sm:p-6 border-b border-brand-orange text-center relative">
         <h3 className="text-base sm:text-lg md:text-xl font-bold text-white tracking-tight flex items-center justify-center space-x-2 uppercase">

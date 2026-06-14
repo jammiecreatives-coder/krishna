@@ -1018,14 +1018,14 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex justify-center items-start overflow-y-auto p-2 sm:p-4 pt-6 pb-24 sm:py-8"
           >
             <motion.div
               initial={{ scale: 0.95, y: 15 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 15 }}
               transition={{ type: 'spring', duration: 0.4 }}
-              className="max-w-2xl w-full"
+              className="max-w-2xl w-full my-auto"
             >
               <LeadForm
                 onClose={() => setIsQuoteFormOpen(false)}
@@ -1046,14 +1046,14 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex justify-center items-start overflow-y-auto p-2 sm:p-4 pt-6 pb-24 sm:py-8"
           >
             <motion.div
               initial={{ scale: 0.95, y: 15 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 15 }}
               transition={{ type: 'spring', duration: 0.4 }}
-              className="max-w-md w-full"
+              className="max-w-md w-full my-auto"
             >
               <AuthSystem
                 initialMode={authMode}
