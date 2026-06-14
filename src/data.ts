@@ -123,7 +123,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     slug: 'packaging-tapes',
     tagline: 'High-shear industrial tapes built for heavy carton lock downs.',
     category: 'Adhesives & Tapes',
-    image: '/src/assets/images/packaging_tapes_1781265579844.jpg',
+    image: '/src/assets/images/regenerated_image_1781467771033.png',
     description: 'Premium BOPP adhesive packaging tapes engineered with special water-based acrylic or hot-melt adhesive formula. Holds strong down to freezing temperatures and up to hot shipping container limits.',
     specifications: {
       'Base Material': 'Biaxially Oriented Polypropylene (BOPP) film',
@@ -197,7 +197,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     slug: 'custom-packaging-solutions',
     tagline: 'End-to-end engineered cargo systems for specialized machinery loads.',
     category: 'Expert Bespoke Packaging',
-    image: '/src/assets/images/custom_packaging_1781266036447.jpg',
+    image: '/src/assets/images/regenerated_image_1781467777353.png',
     description: 'Bespoke bulk industrial packs combining wood crates, structural heavy card, metal bands, and desiccants. Ideal for heavy exports, CNC machines, solar panels, and complex assemblies requiring custom design consults.',
     specifications: {
       'Design Iterations': '3D CAD visualization and drop-test simulating',
