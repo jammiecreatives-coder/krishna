@@ -251,78 +251,78 @@ export default function App() {
             />
 
             {/* SECTION 1: Company Overview */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-6 relative rounded-none overflow-hidden border border-slate-200 group shadow-lg">
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/90 via-transparent to-transparent z-10" />
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              <div className="lg:col-span-6 relative rounded-none overflow-hidden border-2 border-[#002147]/5 group shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/95 via-brand-blue/15 to-transparent z-10" />
                 <img
                   src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200"
                   alt="Industrial Corrugating Plant"
                   referrerPolicy="no-referrer"
-                  className="w-full h-80 lg:h-[480px] object-cover filter brightness-90 hover:scale-105 transition-all duration-700"
+                  className="w-full h-72 sm:h-96 lg:h-[480px] object-cover filter brightness-[0.88] hover:scale-102 transition-all duration-700"
                 />
-                <div className="absolute bottom-6 left-6 right-6 z-25 bg-brand-blue border border-brand-blue/30 p-5 rounded-none shadow-xl">
-                  <p className="text-[10px] font-mono text-brand-orange uppercase tracking-widest font-black">Adarsh Nagar Plant Headquarters</p>
-                  <h4 className="text-white font-bold text-xs mt-1">S-24,25 Janta Colony, Saket Colony, Jaipur</h4>
-                  <p className="text-[11px] text-slate-300 mt-1">Housing automatic corrugation lines operating 24 hours.</p>
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-25 bg-[#002147] border-l-4 border-brand-orange p-4 sm:p-5 rounded-none shadow-2xl">
+                  <p className="text-[9px] font-mono text-brand-orange uppercase tracking-widest font-black">Adarsh Nagar Plant Headquarters</p>
+                  <h4 className="text-white font-display font-bold text-xs sm:text-sm mt-1 uppercase">S-24,25 Janta Colony, Saket Colony, Jaipur</h4>
+                  <p className="text-[10px] sm:text-[11px] text-slate-300 mt-1 font-sans">Automatic corrugation lines operating on 24-hour schedules.</p>
                 </div>
               </div>
 
-              <div className="lg:col-span-6 space-y-6">
-                <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-black flex items-center gap-1.5"><span className="w-6 h-[2px] bg-brand-orange"></span>FOUNDED IN 2014 • JAIPUR PACKAGING EXCELLENCE</span>
-                <h3 className="text-3xl lg:text-5xl font-extrabold tracking-tight text-brand-blue leading-tight uppercase font-display">
+              <div className="lg:col-span-6 space-y-4 sm:space-y-6">
+                <span className="text-[10px] sm:text-xs font-mono uppercase text-brand-orange tracking-widest font-black flex items-center gap-2"><span className="w-5 h-[2px] bg-brand-orange"></span>ESTABLISHED 2014 • INDUSTRIAL INTEGRITY</span>
+                <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-brand-blue leading-tight uppercase font-display">
                   Rajasthan's Premier <span className="italic font-serif font-normal text-brand-orange lowercase">Manufacturer</span> Of Heavy-Duty Corrugated Systems
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-sans">
                   Krishna Packaging Company provides engineered corrugation solutions directly to high-volume manufacturers, tier-1 suppliers, and electronics shippers across Delhi NCR and Rajasthan.
                 </p>
-                <p className="text-slate-600 text-sm leading-relaxed">
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-sans">
                   We specialize in crafting exact-dimensions 3-Ply, 5-Ply, and 7-Ply corrugated craft sheets with bursting strength ratings certified on hydraulic lab testers before shipping. Our capacity permits delivery of 30+ Metric Tons of structural materials every single day, keeping supply lines robust.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                  <div className="flex items-start space-x-3 p-3 bg-white border border-slate-100 shadow-sm">
-                    <div className="w-9 h-9 rounded-none bg-emerald-50 border border-emerald-200 flex items-center justify-center shrink-0">
-                      <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+                  <div className="flex items-start space-x-3 p-3 bg-white border border-slate-150 shadow-sm transition-all hover:border-[#FF6B00]/20">
+                    <div className="w-8.5 h-8.5 rounded-none bg-emerald-50 border border-emerald-250 flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-4.5 h-4.5 text-emerald-600" />
                     </div>
                     <div>
-                      <h5 className="font-bold text-brand-blue text-xs">Direct Core Loading</h5>
-                      <p className="text-[11px] text-slate-500 mt-0.5">Tested bursting profiles matching ISO B2B standards.</p>
+                      <h4 className="font-bold text-brand-blue text-[11px] uppercase tracking-wide">Direct Core Loading</h4>
+                      <p className="text-[10px] text-slate-500 mt-0.5 font-sans leading-snug">Tested bursting profiles matching ISO B2B standards.</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-3 p-3 bg-white border border-slate-100 shadow-sm">
-                    <div className="w-9 h-9 rounded-none bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center shrink-0">
-                      <Award className="w-5 h-5 text-brand-orange" />
+                  <div className="flex items-start space-x-3 p-3 bg-white border border-slate-150 shadow-sm transition-all hover:border-[#FF6B00]/20">
+                    <div className="w-8.5 h-8.5 rounded-none bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center shrink-0">
+                      <Award className="w-4.5 h-4.5 text-brand-orange" />
                     </div>
                     <div>
-                      <h5 className="font-bold text-brand-blue text-xs">FSC Recycled Kraft</h5>
-                      <p className="text-[11px] text-slate-500 mt-0.5">100% biodegradable organic cornstarch binders.</p>
+                      <h4 className="font-bold text-brand-blue text-[11px] uppercase tracking-wide">FSC Recycled Kraft</h4>
+                      <p className="text-[10px] text-slate-500 mt-0.5 font-sans leading-snug">100% biodegradable organic cornstarch binders.</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2">
                   <button
                     onClick={() => setActiveTab('process')}
-                    className="border-b-2 border-brand-orange hover:border-brand-orange/80 text-brand-orange hover:text-brand-orange/80 text-xs font-mono font-bold tracking-wider uppercase pb-1 cursor-pointer transition-all flex items-center space-x-1"
+                    className="border-b border-brand-orange hover:border-brand-orange/80 text-brand-orange hover:text-brand-orange/85 text-xs font-mono font-bold tracking-wider uppercase pb-0.5 cursor-pointer transition-all flex items-center space-x-1"
                   >
                     <span>Inspect Starch Bind Heat controls</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
+                    <ChevronRight className="w-3.5 h-3.5 animate-pulse" />
                   </button>
                 </div>
               </div>
             </section>
 
             {/* SECTION 2: Dynamic Products Overview Grid */}
-            <section className="bg-slate-100/65 border-y border-slate-200 py-16">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-                <div className="text-center space-y-2">
-                  <span className="text-[10px] font-mono uppercase bg-[#002147] py-1 px-3 text-brand-orange tracking-widest border border-[#002147] font-bold">
+            <section className="bg-slate-50/70 border-y border-slate-200/80 py-12 sm:py-16">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div className="text-center space-y-2.5">
+                  <span className="text-[9px] font-mono uppercase bg-[#002147] py-1 px-3 text-brand-orange tracking-widest border border-[#002147] font-black">
                     B2B STRUCTURAL INVENTORY
                   </span>
-                  <h3 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-brand-blue leading-normal uppercase font-display animate-fadeIn">
+                  <h3 className="text-2xl sm:text-4xl font-black tracking-tight text-brand-blue leading-normal uppercase font-display">
                     Precision Industrial <span className="italic font-serif text-brand-orange lowercase font-normal">Product Classes</span>
                   </h3>
-                  <p className="text-xs text-slate-600 max-w-xl mx-auto leading-relaxed font-sans">
+                  <p className="text-xs text-slate-500 max-w-xl mx-auto leading-relaxed font-sans">
                     Custom manufactured specifications engineered for automated container packing and heavy machinery transport.
                   </p>
                 </div>
@@ -331,9 +331,9 @@ export default function App() {
                   {INITIAL_PRODUCTS.map((prod) => (
                     <div
                       key={prod.id}
-                      className="bg-white border border-slate-200 rounded-none overflow-hidden hover:border-brand-orange/40 transition-all duration-300 flex flex-col justify-between group shadow-sm"
+                      className="bg-white border-2 border-slate-100 hover:border-[#FF6B00]/40 transition-all duration-300 flex flex-col justify-between group shadow-sm hover:shadow-md"
                     >
-                      <div className="relative h-48 overflow-hidden">
+                      <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-950">
                         <img
                           src={prod.image}
                           alt={prod.name}
@@ -342,39 +342,39 @@ export default function App() {
                             e.currentTarget.onerror = null;
                             e.currentTarget.src = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800";
                           }}
-                          className="w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition duration-500"
+                          className="w-full h-full object-cover filter brightness-[0.88] group-hover:scale-102 transition duration-500"
                         />
-                        <div className="absolute top-3 left-3 bg-brand-blue text-brand-orange text-[10px] uppercase font-mono tracking-widest px-2 py-1 rounded-none border border-brand-blue/30">
+                        <div className="absolute top-3 left-3 bg-[#002147] text-brand-orange text-[9px] font-mono font-bold uppercase tracking-widest px-2.5 py-1 border border-[#002147]/50 shadow-md">
                           {prod.category}
                         </div>
                       </div>
 
                       <div className="p-5 flex-grow space-y-3">
-                        <h4 className="text-lg font-bold text-brand-blue group-hover:text-brand-orange transition-colors uppercase">
+                        <h4 className="text-base font-extrabold text-[#002147] group-hover:text-brand-orange transition-colors uppercase font-display tracking-tight">
                           {prod.name}
                         </h4>
-                        <p className="text-xs text-slate-600 leading-relaxed min-h-[48px] font-sans">
+                        <p className="text-[11px] sm:text-xs text-slate-500 font-sans leading-normal min-h-[44px]">
                           {prod.tagline}
                         </p>
 
-                        <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-x-2 gap-y-1 text-[10px] font-mono text-slate-500">
+                        <div className="pt-2.5 border-t border-slate-100 grid grid-cols-2 gap-x-2 gap-y-1 text-[10px] sm:text-[11px] font-mono text-slate-500">
                           <p>MOQ: <span className="text-slate-800 font-bold">{prod.minOrderQuantity}</span></p>
                           <p>Lead Time: <span className="text-slate-800 font-bold">{prod.leadTime}</span></p>
                         </div>
                       </div>
 
-                      <div className="p-5 pt-0 grid grid-cols-2 gap-2">
+                      <div className="p-5 pt-0 grid grid-cols-2 gap-2.5">
                         <button
                           onClick={() => {
                             setActiveTab('products');
                           }}
-                          className="bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-700 px-3 py-2 rounded-none text-center text-xs font-bold transition cursor-pointer"
+                          className="bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-700 py-2.5 font-bold tracking-wide text-xs cursor-pointer rounded-none min-h-[40px] font-sans"
                         >
                           Specs Sheets
                         </button>
                         <button
                           onClick={() => openQuoteForProduct(prod.name)}
-                          className="bg-brand-orange hover:bg-brand-orange/95 text-white text-center py-2 rounded-none text-xs font-bold uppercase tracking-wider transition active:scale-95 cursor-pointer"
+                          className="bg-brand-orange hover:bg-brand-orange/95 text-white text-center py-2.5 font-black text-xs uppercase tracking-wider transition active:scale-95 cursor-pointer rounded-none min-h-[40px] font-sans shadow"
                         >
                           Quote RFP
                         </button>
@@ -386,11 +386,11 @@ export default function App() {
             </section>
 
             {/* SECTION 3: Why Choose Krishna Packaging */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-              <div className="text-center space-y-2">
-                <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">RELIABILITY METRICS</span>
-                <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase font-display">Why Enterprise <span className="italic font-serif text-brand-orange lowercase font-normal">Exporters</span> Choose Us</h3>
-                <p className="text-sm text-slate-600 max-w-xl mx-auto leading-relaxed font-sans">
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-10">
+              <div className="text-center space-y-2.5">
+                <span className="text-[10px] font-mono uppercase text-brand-orange tracking-widest font-bold bg-brand-orange/5 px-2.5 py-1">RELIABILITY METRICS</span>
+                <h3 className="text-2xl sm:text-4xl font-black tracking-tight text-brand-blue uppercase font-display">Why Enterprise <span className="italic font-serif text-brand-orange lowercase font-normal">Exporters</span> Choose Us</h3>
+                <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto leading-relaxed font-sans">
                   We understand that transit layout failures disrupt entire manufacturing pipelines. We mitigate this through calibrated engineering.
                 </p>
               </div>
@@ -418,24 +418,22 @@ export default function App() {
                     metric: '24 Hour Dispatch'
                   }
                 ].map((item, idx) => (
-                  <div key={idx} className="bg-white border border-slate-200 p-5 rounded-none space-y-3 relative overflow-hidden group hover:border-brand-orange/40 shadow-sm transition-all">
-                    <span className="text-[10px] font-mono uppercase bg-brand-orange text-white px-2 py-0.5 rounded-none absolute top-4 right-4">
+                  <div key={idx} className="bg-white border-2 border-slate-100 p-5 rounded-none space-y-3.5 relative overflow-hidden group hover:border-[#FF6B00]/45 shadow-sm transition-all animate-fadeIn">
+                    <span className="text-[9px] font-mono uppercase bg-brand-orange/10 text-brand-orange px-2 py-0.5 rounded-none font-bold absolute top-4 right-4 border border-[#FF6B00]/25">
                       {item.metric}
                     </span>
-                    <div className="pt-2 pr-32 text-brand-blue font-extrabold text-sm uppercase">{item.title}</div>
-                    <p className="text-xs text-slate-650 leading-relaxed font-sans mt-2">{item.desc}</p>
+                    <div className="pt-2 pr-24 text-brand-blue font-black text-xs sm:text-sm uppercase tracking-tight font-display">{item.title}</div>
+                    <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-sans mt-2">{item.desc}</p>
                   </div>
                 ))}
               </div>
-            </section>
-
-            {/* SECTION 4: Industries Served Showcase (B2B cards) */}
-            <section className="bg-slate-100/40 py-16 border-y border-slate-200">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-                <div className="text-center space-y-2">
-                  <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">CLIENT HORIZONS</span>
-                  <h3 className="text-3xl font-extrabold tracking-tight text-brand-blue uppercase font-display">Industries Relying On <span className="italic font-serif text-brand-orange lowercase font-normal">Our Packaging</span></h3>
-                  <p className="text-xs text-slate-600 max-w-xl mx-auto leading-relaxed font-sans">
+            </section>            {/* SECTION 4: Industries Served Showcase (B2B cards) */}
+            <section className="bg-slate-50/50 py-12 sm:py-16 border-y border-slate-200/60 transition-all">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div className="text-center space-y-2.5">
+                  <span className="text-[10px] font-mono uppercase text-[#002147] tracking-widest font-black bg-[#002147]/5 px-2.5 py-1">CLIENT HORIZONS</span>
+                  <h3 className="text-2xl sm:text-4xl font-black tracking-tight text-brand-blue uppercase font-display">Industries Relying On <span className="italic font-serif text-brand-orange lowercase font-normal">Our Packaging</span></h3>
+                  <p className="text-xs text-slate-505 max-w-xl mx-auto leading-relaxed font-sans">
                     Custom composite designs configured to isolate vibration, shock, and temperature changes.
                   </p>
                 </div>
@@ -444,19 +442,20 @@ export default function App() {
                   {INDUSTRIES.map((ind, idx) => (
                     <div
                       key={idx}
-                      className="border-t-4 border-l-0 border-brand-orange bg-white border border-slate-200 p-5 rounded-none space-y-2 hover:translate-y-[-4px] transition-all duration-300 shadow-sm"
+                      className="border-t-4 border-l-0 border-brand-orange bg-white border border-slate-150 p-5 rounded-none space-y-2 hover:translate-y-[-2px] transition-all duration-300 shadow-sm hover:shadow"
                     >
-                      <h4 className="text-brand-blue font-bold text-sm uppercase tracking-wide flex items-center justify-between">
-                        <span>{ind.title}</span>
+                      <h4 className="text-[#002147] font-extrabold text-xs sm:text-sm uppercase tracking-wide font-display">
+                        {ind.title}
                       </h4>
-                      <p className="text-xs text-slate-650 leading-relaxed font-sans">
+                      <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed font-sans">
                         {ind.desc}
                       </p>
                     </div>
                   ))}
                 </div>
               </div>
-            </section>            {/* SECTION 5: Interactive Manufacturing Process Timeline */}
+            </section>
+            {/* SECTION 5: Interactive Manufacturing Process Timeline */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
               <div className="text-center space-y-2">
                 <span className="text-xs font-mono uppercase text-brand-orange tracking-widest font-bold">DIGITAL AUDIT</span>

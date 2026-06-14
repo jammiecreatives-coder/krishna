@@ -57,17 +57,17 @@ export default function Header({ activeTab, setActiveTab, openQuoteForm, userPro
       </div>
 
       {/* Main Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
         {/* Brand Logo */}
-        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('home')}>
-          <div className="w-10 h-10 bg-gradient-to-br from-brand-orange to-amber-600 rounded-none flex items-center justify-center shadow-lg">
-            <Box className="w-6 h-6 text-white stroke-[2.2]" />
+        <div className="flex items-center space-x-2.5 sm:space-x-3 cursor-pointer select-none" onClick={() => setActiveTab('home')}>
+          <div className="w-9 h-9 sm:w-11 sm:h-11 bg-gradient-to-br from-brand-orange to-amber-600 rounded-none flex items-center justify-center shadow-lg transform transition-transform duration-200 hover:scale-[1.03] shrink-0">
+            <Box className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[2.2]" />
           </div>
           <div>
-            <h1 className="text-lg font-black tracking-tight leading-tight text-white flex items-center font-sans">
-              KRISHNA <span className="text-brand-orange ml-1 font-semibold text-xs border border-brand-orange/40 px-1 py-0.5 rounded-none">B2B</span>
+            <h1 className="text-sm sm:text-lg font-black tracking-tight leading-none text-white flex items-center font-display uppercase">
+              KRISHNA <span className="text-[#FF6B00] ml-1 font-extrabold text-[9px] sm:text-xs bg-white/10 px-1 py-0.5 border border-[#FF6B00]/40">B2B</span>
             </h1>
-            <p className="text-[10px] font-mono uppercase tracking-widest text-slate-300">Packaging Company</p>
+            <p className="text-[8px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-300 leading-none mt-0.5">Packaging Corporation</p>
           </div>
         </div>
 
@@ -149,34 +149,34 @@ export default function Header({ activeTab, setActiveTab, openQuoteForm, userPro
         </div>
 
         {/* Mobile menu button */}
-        <div className="xl:hidden flex items-center space-x-2">
+        <div className="xl:hidden flex items-center space-x-1 sm:space-x-2">
           {userProfile ? (
             <button
               onClick={() => setActiveTab('dashboard')}
-              className="text-brand-orange text-[10px] font-bold uppercase px-3 py-2 border border-brand-orange/40 hover:bg-white/5 rounded-none transition font-sans"
+              className="text-[10px] sm:text-xs font-bold uppercase px-2.5 py-1.5 border border-white/20 bg-white/5 hover:bg-white/10 rounded-sm text-slate-200 transition font-sans"
             >
               Portal
             </button>
           ) : (
             <button
               onClick={() => onOpenAuth('signin')}
-              className="text-slate-200 text-[10px] font-bold uppercase px-3 py-2 font-sans"
+              className="text-[10px] sm:text-xs font-mono font-bold uppercase px-2.5 py-1.5 text-slate-300 hover:text-white"
             >
-              Sign In
+              Login
             </button>
           )}
           <button
             onClick={openQuoteForm}
-            className="bg-brand-orange hover:bg-brand-orange/90 text-white text-[11px] font-extrabold uppercase px-3.5 py-2 rounded-none shadow transition-all duration-150 min-h-[38px] flex items-center font-sans"
+            className="bg-brand-orange hover:bg-brand-orange/95 text-white text-[10px] sm:text-xs font-black uppercase px-3 py-1.5 rounded-none shadow-md border border-brand-orange/20 active:scale-95 transition-all w-24 sm:w-28 text-center justify-center flex items-center min-h-[36px] font-sans"
           >
-            Quote
+            Request Quote
           </button>
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="text-slate-200 hover:text-white p-2.5 rounded-none hover:bg-white/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+            className="text-slate-200 hover:text-white p-1.5 hover:bg-white/5 transition-colors rounded-none flex items-center justify-center min-w-[38px] min-h-[38px]"
             aria-label="Open menu"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-5.5 h-5.5" />
           </button>
         </div>
       </div>

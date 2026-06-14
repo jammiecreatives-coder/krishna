@@ -76,7 +76,7 @@ export default function Hero({ onQuoteClick, setActiveTab }: HeroProps) {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
             }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none text-white font-sans uppercase"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] text-white font-display uppercase"
           >
             Packaging Solutions <br />
             <span className="font-serif italic font-normal text-brand-orange lowercase">
@@ -89,9 +89,9 @@ export default function Hero({ onQuoteClick, setActiveTab }: HeroProps) {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
             }}
-            className="text-slate-300 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl font-sans"
+            className="text-slate-300 text-xs sm:text-base lg:text-lg leading-relaxed max-w-2xl font-sans"
           >
-            Reliable Industrial Packaging Materials For Manufacturers, Exporters, Warehouses & Businesses Across Rajasthan. Custom-engineered products ranging from high-strength 7-ply sheets to precision-die buffers.
+            Reliable Industrial Packaging Materials For Manufacturers, Exporters, Warehouses & Businesses Across Rajasthan. Custom-engineered products ranging from high-strength 7-ply sheets to precision-die buffers. Certified for global transit durability.
           </motion.p>
 
           {/* Quick Stats Grid */}
@@ -100,19 +100,19 @@ export default function Hero({ onQuoteClick, setActiveTab }: HeroProps) {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
             }}
-            className="grid grid-cols-3 gap-4 py-4 border-y border-white/10"
+            className="grid grid-cols-3 gap-3.5 py-4 border-y border-white/10"
           >
-            <div className="space-y-1">
-              <p className="text-lg sm:text-2xl font-mono font-bold text-white">12+ Years</p>
-              <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest font-mono">Industrial Trust</p>
+            <div className="space-y-1.5">
+              <p className="text-base sm:text-2xl font-mono font-bold text-white leading-none">12+ Years</p>
+              <p className="text-[9px] sm:text-xs text-slate-450 uppercase tracking-widest font-mono leading-none">Industrial Trust</p>
             </div>
-            <div className="space-y-1">
-              <p className="text-lg sm:text-2xl font-mono font-bold text-white">30 Tons</p>
-              <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest font-mono">Daily Operations</p>
+            <div className="space-y-1.5">
+              <p className="text-base sm:text-2xl font-mono font-bold text-white leading-none">30+ Tons</p>
+              <p className="text-[9px] sm:text-xs text-slate-450 uppercase tracking-widest font-mono leading-none">Daily Output</p>
             </div>
-            <div className="space-y-1">
-              <p className="text-lg sm:text-2xl font-mono font-bold text-white">100% Recycled</p>
-              <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest font-mono">FSC Kraft Available</p>
+            <div className="space-y-1.5">
+              <p className="text-base sm:text-2xl font-mono font-bold text-white leading-none">100% Recyclable</p>
+              <p className="text-[9px] sm:text-xs text-slate-450 uppercase tracking-widest font-mono leading-none">FSC Kraft Spec</p>
             </div>
           </motion.div>
 
@@ -122,25 +122,25 @@ export default function Hero({ onQuoteClick, setActiveTab }: HeroProps) {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
             }}
-            className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-2"
+            className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-2.5"
           >
             <motion.button
-              whileHover={{ scale: 1.03, shadow: '0px 10px 20px rgba(229, 87, 34, 0.3)' }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onQuoteClick}
-              className="bg-brand-orange hover:bg-brand-orange/90 text-white font-black text-sm uppercase tracking-wider px-8 py-4 rounded-none shadow-lg flex items-center justify-center space-x-2 cursor-pointer transition-all duration-150"
+              className="bg-brand-orange hover:bg-brand-orange/90 text-white font-black text-xs sm:text-sm uppercase tracking-widest px-6 sm:px-8 py-3.5 sm:py-4 rounded-none shadow-lg flex items-center justify-center space-x-2.5 cursor-pointer transition-all duration-150 min-h-[48px]"
             >
               <span>Request Quotation</span>
               <ArrowRight className="w-4 h-4 text-white stroke-[2.5]" />
             </motion.button>
             <motion.a
-              whileHover={{ scale: 1.03, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
+              whileHover={{ scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
               whileTap={{ scale: 0.98 }}
               href="tel:+919829088124"
-              className="bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-8 py-4 rounded-none border border-white/20 flex items-center justify-center space-x-2 transition-all font-mono"
+              className="bg-white/5 hover:bg-white/10 text-white font-bold text-xs sm:text-sm px-6 sm:px-8 py-3.5 sm:py-4 rounded-none border border-white/20 flex items-center justify-center space-x-2 transition-all font-mono min-h-[48px]"
             >
-              <span>Call Local Factory</span>
-              <span className="text-brand-orange font-bold ml-1 font-sans">+91 98290 88124</span>
+              <span>Call Factory:</span>
+              <span className="text-brand-orange font-black font-sans">+91 98290 88124</span>
             </motion.a>
           </motion.div>
 

@@ -101,22 +101,18 @@ export default function LeadForm({ onClose, preselectedProduct, onSuccessSubmit 
     // Force the scroll container of the modal overlay to reset scroll to 0
     const scrollTimer = setTimeout(() => {
       if (containerRef.current) {
-        // Aligns form at start position
-        containerRef.current.scrollIntoView({ block: 'start' });
+        containerRef.current.scrollTop = 0;
 
         let currentEl = containerRef.current.parentElement;
         while (currentEl) {
-          if (
-            currentEl.classList.contains('overflow-y-auto') || 
-            currentEl.scrollHeight > currentEl.clientHeight
-          ) {
+          // Unconditionally align all scrollable containers to the top
+          if (currentEl.scrollTop > 0 || currentEl.scrollHeight > currentEl.clientHeight) {
             currentEl.scrollTop = 0;
-            break;
           }
           currentEl = currentEl.parentElement;
         }
       }
-    }, 15);
+    }, 10);
 
     return () => clearTimeout(scrollTimer);
   }, [preselectedProduct]);
