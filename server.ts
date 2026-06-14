@@ -411,8 +411,34 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    
+    // Serve static files with proper, high-durability cache settings for hashed assets
+    app.use(express.static(distPath, {
+      maxAge: '1y',
+      immutable: true,
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        } else {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+      }
+    }));
+
+    // Prevent SPA fallbacks for missing assets which break script/style parsers
+    app.get('*', (req, res, next) => {
+      const ext = path.extname(req.path);
+      // If the path ends with an asset extension, do not fall back to index.html (return a clean 404 instead)
+      if (ext && ext !== '.html' && ext !== '.htm') {
+        res.status(404).send('Asset Not Found');
+        return;
+      }
+      next();
+    });
+
     app.get('*', (req, res) => {
+      // Force no-cache for index.html to guarantee clients always load the latest CSS/JS bundle link hashes
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
